@@ -114,7 +114,7 @@ func TestSystem_GaussSolve(t *testing.T) {
 			"2",
 			fields{
 				M: NewMatrixFromArr(matrices[1]),
-				B: vectors[0],
+				B: vectors[1],
 			},
 			false,
 		},
@@ -122,7 +122,7 @@ func TestSystem_GaussSolve(t *testing.T) {
 			"3",
 			fields{
 				M: NewMatrixFromArr(matrices[2]),
-				B: vectors[0],
+				B: vectors[2],
 			},
 			false,
 		},
@@ -130,7 +130,7 @@ func TestSystem_GaussSolve(t *testing.T) {
 			"4",
 			fields{
 				M: NewMatrixFromArr(matrices[3]),
-				B: vectors[0],
+				B: vectors[3],
 			},
 			false,
 		},
@@ -138,7 +138,7 @@ func TestSystem_GaussSolve(t *testing.T) {
 			"5",
 			fields{
 				M: NewMatrixFromArr(matrices[4]),
-				B: vectors[0],
+				B: vectors[4],
 			},
 			false,
 		},
@@ -146,7 +146,7 @@ func TestSystem_GaussSolve(t *testing.T) {
 	answers := [][]float64{
 		{3, 1, 2},
 		{0.624204, 2.24204, -1.36943},
-		{-0.328186, 0.165126, 0.166562},
+		{3.6001, -0.32714, -0.32374},
 		{1281.89, -25.6322, -256.256},
 		{0.0997956, -0.00204352, -0.0188302},
 	}
@@ -160,9 +160,9 @@ func TestSystem_GaussSolve(t *testing.T) {
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GaussSolve() error = %v, wantErr %v", err, tt.wantErr)
 			}
-
+			// fmt.Println(x)
 			for i := 0; i < len(answers[testNumber]); i++ {
-				assert.LessOrEqual(t, math.Abs(answers[testNumber][i]-x[i]), 0.0001)
+				assert.LessOrEqual(t, math.Abs(answers[testNumber][i]-x[i]), 0.002)
 			}
 		})
 	}
