@@ -69,9 +69,33 @@ func TestSystem_GaussSolve(t *testing.T) {
 			{2.0, 3.0, 3.0},
 			{5.0, -3, 1.0},
 		},
+		{
+			{1.0, 2.0, 3.0},
+			{10, -1, 0},
+			{4, 7, 1.6},
+		},
+		{
+			{1, 3, 5},
+			{1000, 10001, 1002},
+			{-5, -10000, 10000},
+		},
+		{
+			{0.001, 0.001, 0.001},
+			{1000, 10001, 4002},
+			{-0.5, -100000, 10000},
+		},
+		{
+			{10, -1, 0},
+			{1000, 10001, 4002},
+			{-0.5, -100000, 10000},
+		},
 	}
 	vectors := [][]float64{
 		{3, 15, 14},
+		{1, 4, 16},
+		{1, 4, 16},
+		{1, 4, 16},
+		{1, 4, 16},
 	}
 	tests := []struct {
 		name    string
@@ -79,9 +103,41 @@ func TestSystem_GaussSolve(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"simple",
+			"1",
 			fields{
 				M: NewMatrixFromArr(matrices[0]),
+				B: vectors[0],
+			},
+			false,
+		},
+		{
+			"2",
+			fields{
+				M: NewMatrixFromArr(matrices[1]),
+				B: vectors[0],
+			},
+			false,
+		},
+		{
+			"3",
+			fields{
+				M: NewMatrixFromArr(matrices[2]),
+				B: vectors[0],
+			},
+			false,
+		},
+		{
+			"4",
+			fields{
+				M: NewMatrixFromArr(matrices[3]),
+				B: vectors[0],
+			},
+			false,
+		},
+		{
+			"5",
+			fields{
+				M: NewMatrixFromArr(matrices[4]),
 				B: vectors[0],
 			},
 			false,
@@ -89,6 +145,10 @@ func TestSystem_GaussSolve(t *testing.T) {
 	}
 	answers := [][]float64{
 		{3, 1, 2},
+		{0.624204, 2.24204, -1.36943},
+		{-0.328186, 0.165126, 0.166562},
+		{1281.89, -25.6322, -256.256},
+		{0.0997956, -0.00204352, -0.0188302},
 	}
 	for testNumber, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
