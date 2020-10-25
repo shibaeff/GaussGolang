@@ -110,16 +110,6 @@ func (s *System) forwardElim(det bool) (flag int) {
 			}
 		}
 
-		if !det {
-			for i := k + 1; i < len(s.M.Arr); i++ {
-				factor := s.M.Arr[i][k] / s.M.Arr[k][k]
-				for j := k + 1; j < len(s.M.Arr); j++ {
-					s.M.Arr[i][j] -= s.M.Arr[k][j] * factor
-				}
-				s.B[i] -= s.B[k] * factor
-				s.M.Arr[i][k] = 0
-			}
-		}
 		// идем циклом по строкам ниже текущей, производя вычитание
 		for i := k + 1; i < len(s.M.Arr); i++ {
 			factor := s.M.Arr[i][k] / s.M.Arr[k][k]

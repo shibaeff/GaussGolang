@@ -58,6 +58,30 @@ func TestSystem_forwardElim(t *testing.T) {
 	}
 }
 
+func BenchmarkSystem_forwardElim(b *testing.B) {
+	N := 10000
+	for i := 0; i < b.N; i++ {
+		matrix := NewRandomMatrix(N, N)
+		v := RandFloats(-1000, 1000, N)
+		s := NewSystem(matrix, v)
+		b.StartTimer()
+		s.forwardElim(false)
+		b.StopTimer()
+	}
+}
+
+func BenchmarkSystem_forwardElimParallel(b *testing.B) {
+	N := 2000
+	for i := 0; i < b.N; i++ {
+		matrix := NewRandomMatrix(N, N)
+		v := RandFloats(-1000, 1000, N)
+		s := NewSystem(matrix, v)
+		b.StartTimer()
+		s.forwardElimParallel(false)
+		b.StopTimer()
+	}
+}
+
 func TestSystem_GaussSolve(t *testing.T) {
 	type fields struct {
 		M *Matrix
